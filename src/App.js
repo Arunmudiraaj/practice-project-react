@@ -1,23 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+// import logo from './logo.svg';
+import "./App.css";
+import FormInput from "./Components/FormInput";
+import AllUsers from "./Components/AllUsers";
+import { useState } from "react";
 
+let allusers = [
+  { id: 1, name: "arun", age: 22 },
+  { id: 2, name: "riya", age: 21 },
+];
 function App() {
+  const [users, setUsers] = useState(allusers);
+  const [valid, setValid] = useState(true);
+ 
+  const addNewData = (data) => {
+    setUsers((pre) => {
+      return [data, ...pre];
+    });
+  };
+
+  const showInValid = () => {
+    setValid(false);
+  };
+  const cancelled = () => {
+    setValid(true);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {valid && (
+        <div className="App">
+          <FormInput submitted={addNewData} inValid={showInValid} />
+          <AllUsers items={users} />
+        </div>
+      )}
+      {!valid && (
+        <div className="parent">
+         
+          <div className="invalid">
+            <div>Invalid input</div>
+            <button className="btn" onClick={cancelled}>Cancel</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
