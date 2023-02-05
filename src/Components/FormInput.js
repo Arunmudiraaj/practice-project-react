@@ -1,10 +1,12 @@
 import './formInput.css'
 import { useState } from 'react'
+import { useRef } from "react";
 
 const FormInput = (props)=>{
     const [name, setName] = useState("")
     const [age, setAge] = useState("")
     const [isValid, setIsValid] = useState(true)
+    const collageRef = useRef()
 
     const userSubmitted = ()=>{
         if (name.trim().length===0 || age.trim().length===0){
@@ -13,10 +15,11 @@ const FormInput = (props)=>{
             return
         }
         console.log(isValid)
-        const data = {name: name,age: age, id : Math.random()}
+        const data = {name: name,age: age, collage : collageRef.current.value, id : Math.random()}
         props.submitted(data)
         setName('')
         setAge('')
+        collageRef.current.value=''
     }
     const userTypingName = (e)=>{
         if (e.target.value.trim().length>0){
@@ -36,6 +39,8 @@ const FormInput = (props)=>{
             <input value={name}  className='element' onChange={userTypingName} type={'text'}/>
             <label  className='element'>Age (Years)</label>
             <input value={age}  className='element' onChange={userTypingAge} type={'number'}/>
+            <label  className='element'>Collage Name</label>
+            <input ref={collageRef} className='element' type={'text'}/>
             <button className='btn' onClick={userSubmitted}>Add User</button>
             </div>
         </div>

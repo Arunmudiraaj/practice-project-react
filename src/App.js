@@ -2,16 +2,30 @@
 import "./App.css";
 import FormInput from "./Components/FormInput";
 import AllUsers from "./Components/AllUsers";
+
 import { useState } from "react";
 
 let allusers = [
-  { id: 1, name: "arun", age: 22 },
-  { id: 2, name: "riya", age: 21 },
+  { id: 1, name: "arun", age: 22, collage : "CBIT" },
+  { id: 2, name: "riya", age: 21, collage: "IIT Delhi" },
 ];
+const InValidModel = (props)=>{
+  return (
+    <div className="parent">
+            <div className="invalid">
+              <div>Invalid input</div>
+              <button className="btn" onClick={props.click}>
+                Cancel
+              </button>
+            </div>
+          </div>
+  );
+}
 function App() {
   const [users, setUsers] = useState(allusers);
   const [valid, setValid] = useState(true);
- 
+  
+
   const addNewData = (data) => {
     setUsers((pre) => {
       return [data, ...pre];
@@ -33,15 +47,9 @@ function App() {
           <AllUsers items={users} />
         </div>
       )}
-      {!valid && (
-        <div className="parent">
-         
-          <div className="invalid">
-            <div>Invalid input</div>
-            <button className="btn" onClick={cancelled}>Cancel</button>
-          </div>
-        </div>
-      )}
+      {!valid &&
+       <InValidModel click={cancelled}/>
+      }
     </div>
   );
 }
